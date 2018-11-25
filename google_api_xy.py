@@ -6,12 +6,10 @@ import cv2
 ans = []
 def detect_text(path):
 
- 
-    
-
    
     img = cv2.imread("test.jpg")
-  
+    
+    #裁切範圍
     x = 0
     y = 0
 
@@ -24,11 +22,11 @@ def detect_text(path):
 
     cv2.imwrite('crop.jpg', crop_img)
     
-    
+    #引用google api
     from google.cloud import vision
     from google.cloud.vision import types
 
-    os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "/opt/lampp/htdocs/upload/ainurse-ddf01edb5c56.json"
+    os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "/opt/lampp/htdocs/upload/ainurse-ddf01edb5c56.json"  # key
     client = vision.ImageAnnotatorClient()
     
 
@@ -40,7 +38,6 @@ def detect_text(path):
     response = client.text_detection(image=image)
     texts = response.text_annotations
 
-
    
     for text in texts:
 
@@ -50,7 +47,6 @@ def detect_text(path):
         ans[i]= ans[i].replace("(","")
         ans[i]= ans[i].replace(")","")
     return (ans[2])
-
 
 
 print(detect_text("/opt/lampp/htdocs/upload/crop.jpg"))
